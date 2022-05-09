@@ -2,7 +2,7 @@ name: Build Modules
 
 on:
   push:
-    branches: [ main ]
+    branches: [ modules ]
   workflow_dispatch:
 
 jobs:

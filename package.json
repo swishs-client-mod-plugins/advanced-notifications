@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "dev": "node ./esbuild.js",
-    "build": "node ./esbuild.js prod"
+    "build": "node ./esbuild.js"
   },
   "devDependencies": {
     "@fal-works/esbuild-plugin-global-externals": "^2.1.2",

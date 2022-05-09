@@ -61,7 +61,4 @@ namespace Replies {
   export const settings = SettingsComponent;
 }
 
-// Because I'm evaling the code I can't directly use ESM exports to export this.
-// And the alternative with ESBuild is to wrap it in a function that doesn't return anything.
-// So to get past this I just set the export object to window and intercept it in the start function.
-window.adn.temp = Replies;
+export default Replies;

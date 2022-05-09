@@ -1,9 +1,9 @@
+const fs = require('fs');
+const path = require('path');
 const esbuild = require('esbuild');
 
 const { clean } = require('esbuild-plugin-clean');
 const { globalExternals } = require('@fal-works/esbuild-plugin-global-externals');
-
-const production = process.argv[2] === 'prod';
 
 esbuild.build({
   // Walks all import statements to transpile every file.
@@ -11,9 +11,6 @@ esbuild.build({
 
   // In case I am dumb and forget to delete code.
   treeShaking: true,
-
-  // Makes ESM import statements transpile to CommonJS.
-  platform: 'browser',
 
   plugins: [
     globalExternals({
@@ -37,20 +34,14 @@ esbuild.build({
     })
   ],
 
+  minify: true,
+  format: 'iife',
   outdir: 'dist',
   outbase: 'src',
-  sourcemap: 'inline',
   jsx: 'transform',
-  entryPoints: [
-    'src/reply-modifications/index.ts',
-  ],
+  sourcemap: 'inline',
+  entryPoints:
+    fs.readdirSync('./src')
+      .map(dir => path.join('src', dir, 'index.ts'))
 
-  // Production settings
-  minify: production,
-  watch: production ? false : {
-    onRebuild(error, result) {
-      if (error) console.error('watch build failed:', error);
-      else console.log('watch build succeeded:', result);
-    },
-  }
 }).catch(() => process.exit(1));
